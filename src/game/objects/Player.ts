@@ -7,38 +7,47 @@ export default class PLayer {
     private readonly PLAYER_HEIGHT = 150;
     private playerBody!: Physics.Arcade.Body;
 
-    private keyRigth!: Input.Keyboard.Key;
-    private keyLeft!: Input.Keyboard.Key;
-    private accelerationRate: number = 50;
-    private maxSpeed: number = 250;
-    private currentSpeed: number = 0;
+    private keys!: {left:Input.Keyboard.Key, rigth:Input.Keyboard.Key}
+    private acceleration: number = 50;
+    private maxSpeed: number = 350;
+    private playerSpeed: number = 100;
 
-    constructor(private scene: Scene, private keyboard: Input.Keyboard.KeyboardPlugin) {
+    constructor(private scene: Scene) {
         this.create()
     }
 
     private create() {
         this.player = this.scene.add.rectangle(512, this.scene.scale.height - this.PLAYER_HEIGHT, this.PLAYER_WIDTH, this.PLAYER_HEIGHT, 0x00ff00).setOrigin(0, 0);
-        
+
         this.scene.physics.add.existing(this.player);
         this.playerBody = this.player.body as Phaser.Physics.Arcade.Body;
         this.playerBody.setCollideWorldBounds(true);
 
-        this.keyRigth = this.keyboard?.addKey('D')
-        this.keyLeft = this.keyboard?.addKey('A')!;
-    
+        this.keys = this.scene.input.keyboard?.addKeys({
+            left:'A',
+            rigth:'D'
+        }) as {left:Input.Keyboard.Key, rigth:Input.Keyboard.Key}
+
     }
 
 
     public update(delta: number) {
-        this.playerBody.setVelocity(0);
-        if(this.keyRigth.isDown){
-            this.currentSpeed = Math.min(this.currentSpeed + this.accelerationRate * (delta / 1000), this.maxSpeed);
-            this.playerBody.setVelocityX(this.currentSpeed);
-        } else if(this.keyLeft.isDown){
-            this.playerBody.setVelocityX(-200)
+        this.playerBody.setVelocity(0)
+
+        const isMoving = this.keys.left.isDown || this.keys.rigth.isDown
+
+        if (isMoving) {
+            this.playerSpeed = Math.min(this.playerSpeed + this.acceleration * (delta / 1000), this.maxSpeed);
+        } else {
+            this.playerSpeed = 100;
         }
-    
+
+        if (this.keys.left.isDown) {
+            this.playerBody.setVelocityX(-this.playerSpeed);
+        } else if (this.keys.rigth.isDown) {
+            this.playerBody.setVelocityX(this.playerSpeed);
+        }
+
     }
 
 

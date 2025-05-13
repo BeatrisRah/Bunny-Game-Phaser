@@ -14,11 +14,11 @@ export class Game extends Scene
     create ()
     {
         this.background = this.add.image(512, 384, 'forest-bg')
-        this.player = new PLayer(this, this.input.keyboard!)
+        this.player = new PLayer(this)
 
     }
 
-    update(delta: number): void {
+    update(time:number, delta: number): void {
         this.player.update(delta)
     }
 }
