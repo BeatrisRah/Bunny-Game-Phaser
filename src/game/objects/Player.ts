@@ -1,5 +1,4 @@
 import { Scene, GameObjects, Input, Physics } from 'phaser';
-import Basket from '../objects/Basket';
 
 
 export default class PLayer {
@@ -14,12 +13,10 @@ export default class PLayer {
     private maxSpeed: number = 350;
     private playerSpeed: number = 100;
 
-    private basket: Basket
 
 
     constructor(private scene: Scene) {
         this.create()
-        this.basket = new Basket(this.scene, this)
 
     }
 
@@ -61,7 +58,6 @@ export default class PLayer {
             this.facingRight = true;
         }
 
-        this.basket.update()
 
 
     }

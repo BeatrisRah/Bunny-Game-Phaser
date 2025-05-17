@@ -9,7 +9,7 @@ export default class Basket {
 
     private readonly BASKET_WIDTH: number = 50;
     private readonly BASKET_HEIGHT: number = 80;
-    private basket: GameObjects.Rectangle;
+    public basket: GameObjects.Rectangle;
     private basketBody: Physics.Arcade.Body;
     
     constructor(scene: Scene, player:PLayer, offsetX: number = 20, offsetY:number = 0 ){
