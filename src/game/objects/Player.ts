@@ -7,6 +7,7 @@ export default class PLayer {
     private readonly PLAYER_WIDTH = 50;
     private readonly PLAYER_HEIGHT = 150;
     public playerBody!: Physics.Arcade.Body;
+    public facingRight: boolean = true;
 
     private keys!: {left:Input.Keyboard.Key, rigth:Input.Keyboard.Key}
     private acceleration: number = 100;
@@ -54,8 +55,10 @@ export default class PLayer {
 
         if (this.keys.left.isDown) {
             this.playerBody.setVelocityX(-this.playerSpeed);
+            this.facingRight = false;
         } else if (this.keys.rigth.isDown) {
             this.playerBody.setVelocityX(this.playerSpeed);
+            this.facingRight = true;
         }
 
         this.basket.update()

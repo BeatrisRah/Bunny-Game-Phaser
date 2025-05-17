@@ -36,9 +36,11 @@ export default class Basket {
 
     update(){
         this.basketBody.setVelocity(0)
-        this.basketBody.reset(
-            this.player.playerBody.x  + this.offsetX,
-            this.player.playerBody.y + this.offsetY
-        )
+
+        const offsetX = this.player.facingRight ? this.offsetX : -this.offsetX
+        const posX = this.player.playerBody.x + offsetX;
+        const posY = this.player.playerBody.y + this.offsetY;
+
+        this.basketBody.reset(posX, posY)
     }
 }
