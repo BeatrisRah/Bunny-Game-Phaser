@@ -1,23 +1,32 @@
 import { Scene, GameObjects, Input, Physics } from 'phaser';
+import Basket from '../objects/Basket';
 
 
 export default class PLayer {
-    private player!: GameObjects.Rectangle;
+    public player!: GameObjects.Rectangle;
     private readonly PLAYER_WIDTH = 50;
     private readonly PLAYER_HEIGHT = 150;
-    private playerBody!: Physics.Arcade.Body;
+    public playerBody!: Physics.Arcade.Body;
 
     private keys!: {left:Input.Keyboard.Key, rigth:Input.Keyboard.Key}
-    private acceleration: number = 50;
+    private acceleration: number = 100;
     private maxSpeed: number = 350;
     private playerSpeed: number = 100;
 
+    private basket: Basket
+
+
     constructor(private scene: Scene) {
         this.create()
+        this.basket = new Basket(this.scene, this)
+
     }
 
     private create() {
-        this.player = this.scene.add.rectangle(512, this.scene.scale.height - this.PLAYER_HEIGHT, this.PLAYER_WIDTH, this.PLAYER_HEIGHT, 0x00ff00).setOrigin(0, 0);
+        this.player = this.scene.add.rectangle(512, 
+            this.scene.scale.height - this.PLAYER_HEIGHT, 
+            this.PLAYER_WIDTH, this.PLAYER_HEIGHT, 
+            0x00ff00).setOrigin(0, 0);
 
         this.scene.physics.add.existing(this.player);
         this.playerBody = this.player.body as Phaser.Physics.Arcade.Body;
@@ -27,6 +36,7 @@ export default class PLayer {
             left:'A',
             rigth:'D'
         }) as {left:Input.Keyboard.Key, rigth:Input.Keyboard.Key}
+        
 
     }
 
@@ -47,6 +57,9 @@ export default class PLayer {
         } else if (this.keys.rigth.isDown) {
             this.playerBody.setVelocityX(this.playerSpeed);
         }
+
+        this.basket.update()
+
 
     }
 
