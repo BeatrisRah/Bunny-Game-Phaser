@@ -44,6 +44,7 @@ export class Game extends Scene
 
             if(this.isPaused){
                 this.physics.world.pause()
+                return;
             } else {
                 this.physics.world.resume()
             }

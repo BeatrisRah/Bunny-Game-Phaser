@@ -9,7 +9,8 @@ export default class PLayer {
     public facingRight: boolean = true;
 
     private keys!: {left:Input.Keyboard.Key, rigth:Input.Keyboard.Key}
-    private acceleration: number = 100;
+    private acceleration: number = 450;
+    private readonly deceleration: number = 500;
     private maxSpeed: number = 350;
     private playerSpeed: number = 100;
 
@@ -40,25 +41,43 @@ export default class PLayer {
 
 
     public update(delta: number) {
-        this.playerBody.setVelocity(0)
+        // const isMoving = this.keys.left.isDown || this.keys.rigth.isDown
 
-        const isMoving = this.keys.left.isDown || this.keys.rigth.isDown
+        // if (isMoving) {
+        //     this.playerSpeed = Math.min(this.playerSpeed + this.acceleration * (delta / 1000), this.maxSpeed);
+        // } else {
+        //     this.playerSpeed = 100;
+        // }
 
-        if (isMoving) {
-            this.playerSpeed = Math.min(this.playerSpeed + this.acceleration * (delta / 1000), this.maxSpeed);
-        } else {
-            this.playerSpeed = 100;
-        }
+        // if (this.keys.left.isDown) {
+        //     this.playerBody.setVelocityX(-this.playerSpeed);
+        //     this.facingRight = false;
+        // } else if (this.keys.rigth.isDown) {
+        //     this.playerBody.setVelocityX(this.playerSpeed);
+        //     this.facingRight = true;
+        // }
+        let velocityX = this.playerBody.velocity.x;
 
         if (this.keys.left.isDown) {
-            this.playerBody.setVelocityX(-this.playerSpeed);
             this.facingRight = false;
+    
+            velocityX -= this.acceleration * (delta / 1000);
+            if (velocityX < -this.maxSpeed) velocityX = -this.maxSpeed;
         } else if (this.keys.rigth.isDown) {
-            this.playerBody.setVelocityX(this.playerSpeed);
             this.facingRight = true;
+    
+            velocityX += this.acceleration * (delta / 1000);
+            if (velocityX > this.maxSpeed) velocityX = this.maxSpeed;
+        } else {
+            // Apply deceleration toward zero
+            if (Math.abs(velocityX) < 10) {
+                velocityX = 0;
+            } else {
+                velocityX += (velocityX > 0 ? -1 : 1) * this.deceleration * (delta / 1000);
+            }
         }
-
-
+    
+        this.playerBody.setVelocityX(velocityX);
 
     }
 
