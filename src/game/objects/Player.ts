@@ -41,35 +41,39 @@ export default class PLayer {
 
 
     public update(delta: number) {
-        // const isMoving = this.keys.left.isDown || this.keys.rigth.isDown
-
-        // if (isMoving) {
-        //     this.playerSpeed = Math.min(this.playerSpeed + this.acceleration * (delta / 1000), this.maxSpeed);
-        // } else {
-        //     this.playerSpeed = 100;
-        // }
-
-        // if (this.keys.left.isDown) {
-        //     this.playerBody.setVelocityX(-this.playerSpeed);
-        //     this.facingRight = false;
-        // } else if (this.keys.rigth.isDown) {
-        //     this.playerBody.setVelocityX(this.playerSpeed);
-        //     this.facingRight = true;
-        // }
         let velocityX = this.playerBody.velocity.x;
+        
+        const basket_width = 50;
+        const basketOffsetX = this.facingRight ? this.player.width + basket_width : 0;
+        const sceneWidth = this.scene.scale.width;
+        const playerRightEdge = this.playerBody.x + this.PLAYER_WIDTH;
+        const playerLeftEdge = this.playerBody.x;
 
         if (this.keys.left.isDown) {
             this.facingRight = false;
     
-            velocityX -= this.acceleration * (delta / 1000);
-            if (velocityX < -this.maxSpeed) velocityX = -this.maxSpeed;
+            if (playerLeftEdge - this.player.width > 0) {
+                velocityX -= this.acceleration * (delta / 1000);
+                velocityX = Math.max(velocityX, -this.maxSpeed);
+            } else {
+                velocityX = 0;
+            }
         } else if (this.keys.rigth.isDown) {
             this.facingRight = true;
     
-            velocityX += this.acceleration * (delta / 1000);
-            if (velocityX > this.maxSpeed) velocityX = this.maxSpeed;
+            if (playerRightEdge + basket_width < sceneWidth) {
+                velocityX += this.acceleration * (delta / 1000);
+                velocityX = Math.min(velocityX, this.maxSpeed);
+            } else {
+                velocityX = 0;
+            }
         } else {
-            // Apply deceleration toward zero
+
+            if(playerLeftEdge - this.player.width <= 0 || playerRightEdge + basket_width >= sceneWidth){
+                this.playerBody.setVelocityX(0);
+                return;
+            }
+
             if (Math.abs(velocityX) < 10) {
                 velocityX = 0;
             } else {
