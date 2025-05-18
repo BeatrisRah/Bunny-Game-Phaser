@@ -11,6 +11,8 @@ export class Game extends Scene
     private player!: PLayer;
     private basket: Basket
     private fallingGroup: FallingObject
+    private pauseKey!: Phaser.Input.Keyboard.Key
+    private isPaused: boolean;
 
     constructor ()
     {
@@ -24,16 +26,29 @@ export class Game extends Scene
         this.basket = new Basket(this, this.player)
         this.fallingGroup= new FallingObject(this)
 
+        this.pauseKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.P)
+        this.isPaused = false;
+
         this.physics.add.overlap(
             this.basket.basket as Phaser.Types.Physics.Arcade.GameObjectWithBody,                
             this.fallingGroup.fallingGroup,   
-            this.handleBasketCollision as Phaser.Types.Physics.Arcade.ArcadePhysicsCallback,      
-            undefined,                        
+            this.handleBasketCollision as Phaser.Types.Physics.Arcade.ArcadePhysicsCallback,
+            undefined,
             this                              
         );
     }
 
     update(time:number, delta: number): void {
+        if(Phaser.Input.Keyboard.JustDown(this.pauseKey)){
+            this.isPaused = !this.isPaused
+
+            if(this.isPaused){
+                this.physics.world.pause()
+            } else {
+                this.physics.world.resume()
+            }
+        }
+
         this.player.update(delta)
         this.basket.update()
         this.fallingGroup.update(time);
