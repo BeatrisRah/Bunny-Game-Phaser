@@ -3,6 +3,7 @@ body {
     padding: 0;
     color: rgba(255, 255, 255, 0.87);
     background-color: #0f0f0f;
+    position: relative;
 }
 
 #app {
@@ -12,4 +13,26 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#pause-menu {
+    position: absolute;
+    display: none;
+    background-color: #0f0f0fb5;
+    top:25%;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    width: 20%;
+    padding: 10px;
+}
+
+#pause-menu button{
+    background-color: #0f0f0fd4;
+    border: none;
+    border-radius: 2px;
+    padding: 10px;
+    color: white;
 }

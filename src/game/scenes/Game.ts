@@ -13,6 +13,7 @@ export class Game extends Scene
     private fallingGroup: FallingObject
     private pauseKey!: Phaser.Input.Keyboard.Key
     private isPaused: boolean;
+    private pauseButton: HTMLButtonElement = document.getElementById('pause-menu') as HTMLButtonElement;
 
     constructor ()
     {
@@ -43,9 +44,11 @@ export class Game extends Scene
             this.isPaused = !this.isPaused
 
             if(this.isPaused){
+                this.pauseButton.style.display = 'block'
                 this.physics.world.pause()
                 return;
             } else {
+                this.pauseButton.style.display = 'none'
                 this.physics.world.resume()
             }
         }
