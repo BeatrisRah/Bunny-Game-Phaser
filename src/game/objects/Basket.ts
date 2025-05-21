@@ -7,7 +7,7 @@ export default class Basket {
     private offsetX: number;
     private offsetY: number;
 
-    private readonly BASKET_WIDTH: number = 50;
+    private readonly BASKET_WIDTH: number = 70;
     private readonly BASKET_HEIGHT: number = 80;
     public basket: GameObjects.Rectangle;
     private basketBody: Physics.Arcade.Body;
@@ -15,7 +15,7 @@ export default class Basket {
     constructor(scene: Scene, player:PLayer, offsetX: number = 20, offsetY:number = 0 ){
         this.scene = scene;
         this.player = player;
-        this.offsetX = this.player.player.width;
+        this.offsetX = this.BASKET_WIDTH;
         this.offsetY = this.player.player.height - this.BASKET_HEIGHT;
 
         this.create()
@@ -37,7 +37,7 @@ export default class Basket {
     update(){
         this.basketBody.setVelocity(0)
 
-        const offsetX = this.player.facingRight ? this.offsetX : -this.offsetX
+        const offsetX = this.player.facingRight ? this.player.player.width : -this.offsetX
         const posX = this.player.playerBody.x + offsetX;
         const posY = this.player.playerBody.y + this.offsetY;
 

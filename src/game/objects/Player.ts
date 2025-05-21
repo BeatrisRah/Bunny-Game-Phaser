@@ -43,7 +43,7 @@ export default class PLayer {
     public update(delta: number) {
         let velocityX = this.playerBody.velocity.x;
         
-        const basket_width = 50;
+        const basket_width = 70;
         const basketOffsetX = this.facingRight ? this.player.width + basket_width : 0;
         const sceneWidth = this.scene.scale.width;
         const playerRightEdge = this.playerBody.x + this.PLAYER_WIDTH;
@@ -52,7 +52,7 @@ export default class PLayer {
         if (this.keys.left.isDown) {
             this.facingRight = false;
     
-            if (playerLeftEdge - this.player.width > 0) {
+            if (playerLeftEdge - basket_width > 0) {
                 velocityX -= this.acceleration * (delta / 1000);
                 velocityX = Math.max(velocityX, -this.maxSpeed);
             } else {
@@ -69,7 +69,7 @@ export default class PLayer {
             }
         } else {
 
-            if(playerLeftEdge - this.player.width <= 0 || playerRightEdge + basket_width >= sceneWidth){
+            if(playerLeftEdge - basket_width <= 0 || playerRightEdge + basket_width >= sceneWidth){
                 this.playerBody.setVelocityX(0);
                 return;
             }
