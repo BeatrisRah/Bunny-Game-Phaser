@@ -12,7 +12,7 @@ export default class PLayer {
     private acceleration: number = 450;
     private readonly deceleration: number = 500;
     private maxSpeed: number = 350;
-    private playerSpeed: number = 100;
+    // private playerSpeed: number = 100;
 
 
 

@@ -12,7 +12,7 @@ export default class Basket {
     public basket: GameObjects.Sprite;
     private basketBody: Physics.Arcade.Body;
     
-    constructor(scene: Scene, player:PLayer, offsetX: number = 20, offsetY:number = 0 ){
+    constructor(scene: Scene, player:PLayer){
         this.scene = scene;
         this.player = player;
         this.offsetX = this.BASKET_WIDTH;
