@@ -22,14 +22,9 @@ export default class PLayer {
     }
 
     private create() {
-        // this.player = this.scene.add.rectangle(512, 
-        //     this.scene.scale.height - this.PLAYER_HEIGHT, 
-        //     this.PLAYER_WIDTH, this.PLAYER_HEIGHT, 
-        //     0x00ff00).setOrigin(0, 0);
-
         this.player = this.scene.physics.add.sprite(
-            512,
-            this.scene.scale.height - 100,
+            512, //Middle of scene TODO: Calculate
+            this.scene.scale.height,
             'bunny',
         0)
 
@@ -49,8 +44,7 @@ export default class PLayer {
     public update(delta: number) {
         let velocityX = this.playerBody.velocity.x;
         
-        const basket_width = 70;
-        // const basketOffsetX = this.facingRight ? this.player.width + basket_width : 0;
+        const basket_width = 60;
         const sceneWidth = this.scene.scale.width;
         const playerRightEdge = this.playerBody.x + this.PLAYER_WIDTH;
         const playerLeftEdge = this.playerBody.x;

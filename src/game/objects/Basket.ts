@@ -7,9 +7,9 @@ export default class Basket {
     private offsetX: number;
     private offsetY: number;
 
-    private readonly BASKET_WIDTH: number = 70;
-    private readonly BASKET_HEIGHT: number = 80;
-    public basket: GameObjects.Rectangle;
+    private readonly BASKET_WIDTH: number = 60;
+    private readonly BASKET_HEIGHT: number = 70;
+    public basket: GameObjects.Sprite;
     private basketBody: Physics.Arcade.Body;
     
     constructor(scene: Scene, player:PLayer, offsetX: number = 20, offsetY:number = 0 ){
@@ -22,13 +22,19 @@ export default class Basket {
     }
 
     create(){
-        this.basket = this.scene.add.rectangle(
-            this.player.player.x + this.offsetX, 
-            this.player.player.y + this.offsetY, 
-            this.BASKET_WIDTH, 
-            this.BASKET_HEIGHT, 
-            0xff0000).setOrigin(0, 0)
-        this.scene.physics.add.existing(this.basket)
+        // this.basket = this.scene.add.rectangle(
+        //     this.player.player.x + this.offsetX, 
+        //     this.player.player.y + this.offsetY, 
+        //     this.BASKET_WIDTH, 
+        //     this.BASKET_HEIGHT, 
+        //     0xff0000).setOrigin(0, 0)
+        this.basket = this.scene.physics.add.sprite(
+            this.player.player.x,
+            this.player.player.y,
+            'basket',
+            0
+        ).setOrigin(0, 0)
+        // this.scene.physics.add.existing(this.basket)
         this.basketBody = this.basket.body as Physics.Arcade.Body;
         this.basketBody.setCollideWorldBounds(true);
         this.basketBody.setAllowGravity(false);
