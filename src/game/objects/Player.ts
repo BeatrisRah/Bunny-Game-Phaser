@@ -2,9 +2,9 @@ import { Scene, GameObjects, Input, Physics } from 'phaser';
 
 
 export default class PLayer {
-    public player!: GameObjects.Rectangle;
-    private readonly PLAYER_WIDTH = 50;
-    private readonly PLAYER_HEIGHT = 150;
+    public player!: GameObjects.Sprite;
+    private readonly PLAYER_WIDTH = 70;
+    private readonly PLAYER_HEIGHT = 100;
     public playerBody!: Physics.Arcade.Body;
     public facingRight: boolean = true;
 
@@ -22,10 +22,16 @@ export default class PLayer {
     }
 
     private create() {
-        this.player = this.scene.add.rectangle(512, 
-            this.scene.scale.height - this.PLAYER_HEIGHT, 
-            this.PLAYER_WIDTH, this.PLAYER_HEIGHT, 
-            0x00ff00).setOrigin(0, 0);
+        // this.player = this.scene.add.rectangle(512, 
+        //     this.scene.scale.height - this.PLAYER_HEIGHT, 
+        //     this.PLAYER_WIDTH, this.PLAYER_HEIGHT, 
+        //     0x00ff00).setOrigin(0, 0);
+
+        this.player = this.scene.physics.add.sprite(
+            512,
+            this.scene.scale.height - 100,
+            'bunny',
+        0)
 
         this.scene.physics.add.existing(this.player);
         this.playerBody = this.player.body as Phaser.Physics.Arcade.Body;

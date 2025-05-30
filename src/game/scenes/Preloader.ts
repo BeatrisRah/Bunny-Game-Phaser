@@ -35,6 +35,7 @@ export class Preloader extends Scene
         this.load.image('forest-bg', 'forest_bg.png')
 
         this.load.image('logo', 'logo.png');
+        this.load.spritesheet('bunny', 'bunny_player.png', {frameWidth:85, frameHeight:114})
     }
 
     create ()
