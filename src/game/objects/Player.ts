@@ -3,8 +3,8 @@ import { Scene, GameObjects, Input, Physics } from 'phaser';
 
 export default class PLayer {
     public player!: GameObjects.Sprite;
-    private readonly PLAYER_WIDTH = 70;
-    private readonly PLAYER_HEIGHT = 100;
+    private readonly PLAYER_WIDTH = 85;
+    private readonly PLAYER_HEIGHT = 114;
     public playerBody!: Physics.Arcade.Body;
     public facingRight: boolean = true;
 
@@ -50,7 +50,7 @@ export default class PLayer {
         let velocityX = this.playerBody.velocity.x;
         
         const basket_width = 70;
-        const basketOffsetX = this.facingRight ? this.player.width + basket_width : 0;
+        // const basketOffsetX = this.facingRight ? this.player.width + basket_width : 0;
         const sceneWidth = this.scene.scale.width;
         const playerRightEdge = this.playerBody.x + this.PLAYER_WIDTH;
         const playerLeftEdge = this.playerBody.x;
@@ -66,6 +66,7 @@ export default class PLayer {
             }
         } else if (this.keys.rigth.isDown) {
             this.facingRight = true;
+            
     
             if (playerRightEdge + basket_width < sceneWidth) {
                 velocityX += this.acceleration * (delta / 1000);
@@ -86,7 +87,7 @@ export default class PLayer {
                 velocityX += (velocityX > 0 ? -1 : 1) * this.deceleration * (delta / 1000);
             }
         }
-    
+        this.player.setFlipX(!this.facingRight)
         this.playerBody.setVelocityX(velocityX);
 
     }
